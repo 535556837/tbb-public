@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation=" 
+                http://www.springframework.org/schema/beans 
+                http://www.springframework.org/schema/beans/spring-beans.xsd 
+                http://www.springframework.org/schema/context 
+                http://www.springframework.org/schema/context/spring-context.xsd 
+                http://www.springframework.org/schema/mvc 
+                http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	<!-- 自动扫描的包名 -->
+	<context:component-scan base-package="com.zyt.cxfq.web" />
+	<mvc:annotation-driven conversion-service="conversionService">
+		<mvc:message-converters register-defaults="true">
+			<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+			<!--定义后台返回json日期转换格式-->
+			<bean id="fastJsonHttpMessageConverter"  
+        		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">  
+				<property name="objectMapper">
+	                <bean class="com.zyt.cxfq.common.util.MyObjectMapper">
+	                    <property name="dateFormat">
+	                        <bean class="java.text.SimpleDateFormat">
+	                            <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
+	                        </bean>
+	                    </property>
+	                </bean>
+				</property>
+    		</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 设置mvc接收字符串日期转换方式 -->
+	<bean id="dateConvert" class="com.zyt.cxfq.common.entity.DateConvert"/>
+	<!-- mvc中加入conversion-service="conversionService" ，并注入dateConvert-->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<ref bean="dateConvert"/>
+			</set>
+		</property>
+	</bean>
+
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/jsp/" />
+		<property name="suffix" value=".jsp" />
+		<property name="order" value="1" />
+	</bean>
+	
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件的最大尺寸为1MB -->
+		  <property name="defaultEncoding" value="utf-8"></property> 
+		<property name="maxUploadSize">
+			<value>2080539425</value>
+		</property>
+	</bean>
+
+	
+	<mvc:resources mapping="/js/**" location="/js/" />
+	<!-- 容器默认的DefaultServletHandler处理 所有静态内容与无RequestMapping处理的URL -->
+	<mvc:default-servlet-handler />
+	<!-- 定义无需Controller的url<->view直接映射 -->
+ 	<mvc:view-controller path="/" view-name="redirect:/index.html" />
+	   <mvc:interceptors>  
+        <mvc:interceptor>  
+           <!--  <mvc:mapping path="/*" />   -->
+            <mvc:mapping path="/*/*" />
+          		<!--  、 需排除拦截的地址   -->
+				<mvc:exclude-mapping path="/index.html" />
+            <bean class="com.zyt.cxfq.common.interceptor.CheckLoginInterceptor" />
+        </mvc:interceptor>  
+   </mvc:interceptors>
+
+	<bean id="exceptionHandler" class="com.zyt.cxfq.common.interceptor.MyExceptionHandler"/>
+
+	<!-- 将Controller抛出的异常转到特定View, 保持SiteMesh的装饰效果 -->
+	<!--<bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">error_fileupload</prop>
+				&lt;!&ndash; <prop key="org.apache.shiro.authz.UnauthorizedException">error/403</prop> &ndash;&gt;
+				<prop key="java.lang.Throwable">error/500</prop>
+			</props>
+		</property>
+	</bean>-->
+</beans>

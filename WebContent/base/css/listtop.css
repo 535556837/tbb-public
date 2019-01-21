@@ -1,0 +1,50 @@
+.modal-header {
+	padding: 10px !important;
+}
+
+.modal-footer {
+	padding: 5px !important;
+}
+
+.form-group {
+	margin-bottom: 3px !important;
+}
+
+h4 {
+	font-size: 24px !important;
+}
+
+.col-sm-8 {
+	margin-bottom: 5px;
+}
+
+.keep-open {
+	margin-top: -10px;
+}
+
+.buttom-left {
+	margin-left: 5px;
+}
+
+.ontr {
+	background-color: #DBDBDB;
+}
+
+.title-top {
+	margin-top: 10px;
+}
+
+.dropdown-tree {
+	left: 0;
+	right: 0;
+	min-height: 100px;
+	max-height: 300px;
+	overflow: auto;
+}
+
+.input-caret {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	margin-right: 10px;
+}

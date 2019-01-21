@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- dao.xml -->
+<mapper namespace="com.zyt.voluntary.Commondao">
+
+	<!-- 错误表的模糊查询 -->
+	<select id="getExceptionMoho" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+		select e.* ,Phone as phone from  exceptionrecord  as  e 
+  		 join  b_member  as b  on  e.bmemberid=b.B_MemberID  
+		<where>
+		 <if test="example.phone != null">
+		 	<if test="example.phone != ''">
+	          Phone like CONCAT('%',#{example.phone} ,'%') 
+	          </if>
+	     </if>
+	     <if test="example.requesturl != null">
+		 	<if test="example.requesturl != ''">
+		 	
+	          and requesturl like CONCAT('%',#{example.requesturl} ,'%') 
+	          </if>
+	     </if>
+	     <if test="example.classname != null">
+		 	<if test="example.classname != ''">
+	          and classname like CONCAT('%',#{example.classname},'%') 
+	          </if>
+	     </if>
+	    <if test="example.createtime != null">
+	          and e.createTime &gt; #{example.createtime} 
+	     </if>
+	    
+	</where> 
+	  ORDER BY e.createTime 
+	      <if test="example.createtime == null">
+	         DESC
+	     </if>
+	</select >
+<!-- 模糊查询 某员工/某车的报价记录 格式：车{投保方案 {时间 -->
+<select id="selectUserQuotesMOHU" parameterType="java.util.HashMap"  resultType="java.util.HashMap"> 
+
+	select * from  d_quote_record  
+	<where>
+		 <if test="licenseNo != null">
+		 	<if test="licenseNo != ''">
+	          license_no =#{licenseNo}
+	          </if>
+	     </if>
+	      <if test="empId != null">
+		 	<if test="empId != ''">
+	         and  emp_id =#{empId}
+	          </if>
+	     </if>
+	   <!--  <if test="createtime != null">
+	          and createTime &gt; #{example.createtime} 
+	     </if> -->
+	</where> 
+	ORDER BY create_time Desc
+</select>
+
+<!-- 得到某次全价 的记录 -->
+<select id="selectQuoteById" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+
+	select qre.*,repd.repComment,car.license_no from d_quote as qre 
+	LEFT JOIN (select rep.quote_id,
+	CONCAT("[",GROUP_CONCAT('{"kind_name":"',rep.kind_name,'","premium":"',
+	rep.premium,
+	'","bench_mark_premium":"', rep.bench_mark_premium,'","dis_count":"', rep.dis_count,
+	'","kind_code":"', rep.kind_code,'","tax_premium":"', rep.tax_premium,
+	'","amount":"', rep.amount,'"}'),"]") as repComment 
+	from d_quote_dtl as rep GROUP BY quote_id ) as repd on qre.quote_id=repd.quote_id 	
+	LEFT JOIN d_car  as car  on car.car_id =qre.car_id 
+	
+	where qre.quote_id=#{quoteId} ;
+</select>	
+
+<!-- 得到某销售的所有客户  -->
+<select id="selectClientByEmpId" parameterType="java.util.HashMap" resultType="java.util.HashMap">
+
+	 SELECT * from  d_client where   client_id in 
+	 (select client_id  from d_emp_client where u_id=#{empId}) 
+	 ORDER BY update_time desc
+</select>	
+</mapper>

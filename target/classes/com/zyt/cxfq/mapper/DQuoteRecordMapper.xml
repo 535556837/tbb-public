@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DQuoteRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DQuoteRecord" >
+    <id column="quote_record_id" property="quoteRecordId" jdbcType="VARCHAR" />
+    <result column="quote_id" property="quoteId" jdbcType="VARCHAR" />
+    <result column="emp_id" property="empId" jdbcType="VARCHAR" />
+    <result column="msg" property="msg" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+    <result column="policy_end_time" property="policyEndTime" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="is_check" property="isCheck" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    quote_record_id, quote_id, emp_id, msg, create_time, license_no, policy_end_time, 
+    source, is_check
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DQuoteRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_quote_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_quote_record
+    where quote_record_id = #{quoteRecordId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_quote_record
+    where quote_record_id = #{quoteRecordId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DQuoteRecordExample" >
+    delete from d_quote_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DQuoteRecord" >
+    <selectKey resultType="java.lang.String" keyProperty="quoteRecordId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_quote_record (quote_record_id, quote_id, emp_id, 
+      msg, create_time, license_no, 
+      policy_end_time, source, is_check
+      )
+    values (#{quoteRecordId,jdbcType=VARCHAR}, #{quoteId,jdbcType=VARCHAR}, #{empId,jdbcType=VARCHAR}, 
+      #{msg,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{licenseNo,jdbcType=VARCHAR}, 
+      #{policyEndTime,jdbcType=VARCHAR}, #{source,jdbcType=VARCHAR}, #{isCheck,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DQuoteRecord" >
+    <selectKey resultType="java.lang.String" keyProperty="quoteRecordId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_quote_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      quote_record_id,
+      <if test="quoteId != null" >
+        quote_id,
+      </if>
+      <if test="empId != null" >
+        emp_id,
+      </if>
+      <if test="msg != null" >
+        msg,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="licenseNo != null" >
+        license_no,
+      </if>
+      <if test="policyEndTime != null" >
+        policy_end_time,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="isCheck != null" >
+        is_check,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{quoteRecordId,jdbcType=VARCHAR},
+      <if test="quoteId != null" >
+        #{quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseNo != null" >
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="policyEndTime != null" >
+        #{policyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        #{isCheck,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DQuoteRecordExample" resultType="java.lang.Integer" >
+    select count(*) from d_quote_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_quote_record
+    <set >
+      <if test="record.quoteRecordId != null" >
+        quote_record_id = #{record.quoteRecordId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quoteId != null" >
+        quote_id = #{record.quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.empId != null" >
+        emp_id = #{record.empId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msg != null" >
+        msg = #{record.msg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.licenseNo != null" >
+        license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.policyEndTime != null" >
+        policy_end_time = #{record.policyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCheck != null" >
+        is_check = #{record.isCheck,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_quote_record
+    set quote_record_id = #{record.quoteRecordId,jdbcType=VARCHAR},
+      quote_id = #{record.quoteId,jdbcType=VARCHAR},
+      emp_id = #{record.empId,jdbcType=VARCHAR},
+      msg = #{record.msg,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      policy_end_time = #{record.policyEndTime,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      is_check = #{record.isCheck,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DQuoteRecord" >
+    update d_quote_record
+    <set >
+      <if test="quoteId != null" >
+        quote_id = #{quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="empId != null" >
+        emp_id = #{empId,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null" >
+        msg = #{msg,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="licenseNo != null" >
+        license_no = #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="policyEndTime != null" >
+        policy_end_time = #{policyEndTime,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="isCheck != null" >
+        is_check = #{isCheck,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where quote_record_id = #{quoteRecordId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DQuoteRecord" >
+    update d_quote_record
+    set quote_id = #{quoteId,jdbcType=VARCHAR},
+      emp_id = #{empId,jdbcType=VARCHAR},
+      msg = #{msg,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      policy_end_time = #{policyEndTime,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      is_check = #{isCheck,jdbcType=VARCHAR}
+    where quote_record_id = #{quoteRecordId,jdbcType=VARCHAR}
+  </update>
+</mapper>

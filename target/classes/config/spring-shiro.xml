@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<description>== Shiro Components ==</description>
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">  
+    <property name="securityManager" ref="securityManager"/>  
+</bean>        
+         	<!-- Shiro生命周期处理器-->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+     		<!-- 授权 认证 -->
+	<bean id="sampleRealm" class="com.zyt.cxfq.common.entity.SampleRealm" >
+	            <!--启用缓存，默认关闭-->
+        <property name="cachingEnabled" value="true"/>
+        <!--启用身份验证缓存，即缓存AuthenticationInfo，默认false-->
+        <property name="authenticationCachingEnabled" value="true"/>
+        <!--启用授权缓存，即缓存AuthorizationInfo的信息，默认为false-->
+        <property name="authorizationCachingEnabled" value="true"/>	    
+	</bean>
+    	<!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="sampleRealm"/>
+		<property name="cacheManager" ref="customShiroCacheManager"/>
+    </bean>
+    	<!-- 用户缓存 -->
+	<bean id="customShiroCacheManager" class="com.zyt.cxfq.service.shrio.CustomShiroCacheManager">
+	    <property name="shiroCacheManager" ref="jedisShiroCacheManager"/>
+	</bean>
+			<!-- shiro 缓存实现，对ShiroCacheManager，我是采用redis的实现 -->
+	<bean id="jedisShiroCacheManager" class="com.zyt.cxfq.service.shrio.JedisShiroCacheManager">
+	    <property name="jedisManager" ref="jedisManager"/>
+	</bean>
+			<!-- redis 的缓存 -->
+	<bean id="jedisManager" class="com.zyt.cxfq.service.redis.JedisManager">
+	    <property name="jedisPool" ref="jedisPool"/>
+	</bean>
+     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/index.html" />
+			<!-- TODO 待提取	 -->
+		<property name="successUrl" value="/" />
+		<property name="unauthorizedUrl" value="/?login" />
+		<property name="filterChainDefinitions" >
+		    <value>
+		    	<!-- /YOYOAPP/**=anon			 无参,表示可匿名使用,可以理解为匿名用户或游客
+		        /jsp/**=anon
+		        /base/**=anon
+		        /BMemberService/login=anon
+		        /BMemberService/SYSlogin=anon    后台接口暴露 
+		        /BMemberService/getGifCode= anon
+		        /SysMenuService/**=authc       无参,表示需认证才能使用
+				/**/cms/*=anon -->
+				
+				/** = anon 
+				/BMemberService/login= anon
+		       <!--  /BMemberService/SYSlogin= anon  -->
+				 <!--   /SysMenuService/**=authc  无参,表示需认证才能使用 -->
+				<!-- /** = authc -->
+				
+				
+		    </value>
+		</property>   
+	</bean> 
+
+</beans>

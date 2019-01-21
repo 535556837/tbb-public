@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:task="http://www.springframework.org/schema/task"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/task
+		http://www.springframework.org/schema/task/spring-task.xsd
+		http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans.xsd
+                ">
+	<!-- <bean id="weixinTaskService" class="com.zyt.cxfq.service.weixin.WeixinTaskService">
+		用于程序中判断是否过期的阀值,必须大于或等于定时器的间隔时间
+		<property name="intervalTime" value="601000" />
+	</bean>
+	<bean id="orderCheckTask" class="com.zyt.cxfq.service.task.OrderCheckTask"/>
+	<task:scheduled-tasks>
+		定时器,单位毫秒
+		<task:scheduled ref="orderCheckTask" method="orderCheck" fixed-rate="10000"/>
+	</task:scheduled-tasks>  -->
+</beans>

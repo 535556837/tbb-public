@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DShortMsgMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DShortMsg" >
+    <id column="T_MessageManagerID" property="tMessagemanagerid" jdbcType="CHAR" />
+    <result column="MsgType" property="msgtype" jdbcType="INTEGER" />
+    <result column="Title" property="title" jdbcType="VARCHAR" />
+    <result column="Content" property="content" jdbcType="VARCHAR" />
+    <result column="MessageType" property="messagetype" jdbcType="INTEGER" />
+    <result column="sendtype" property="sendtype" jdbcType="VARCHAR" />
+    <result column="ReleseDate" property="relesedate" jdbcType="TIMESTAMP" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    T_MessageManagerID, MsgType, Title, Content, MessageType, sendtype, ReleseDate, CreateTime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DShortMsgExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_short_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_short_msg
+    where T_MessageManagerID = #{tMessagemanagerid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_short_msg
+    where T_MessageManagerID = #{tMessagemanagerid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DShortMsgExample" >
+    delete from d_short_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DShortMsg" >
+    <selectKey resultType="java.lang.String" keyProperty="tMessagemanagerid" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_short_msg (T_MessageManagerID, MsgType, Title, 
+      Content, MessageType, sendtype, 
+      ReleseDate, CreateTime)
+    values (#{tMessagemanagerid,jdbcType=CHAR}, #{msgtype,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{content,jdbcType=VARCHAR}, #{messagetype,jdbcType=INTEGER}, #{sendtype,jdbcType=VARCHAR}, 
+      #{relesedate,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DShortMsg" >
+    <selectKey resultType="java.lang.String" keyProperty="tMessagemanagerid" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_short_msg
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      T_MessageManagerID,
+      <if test="msgtype != null" >
+        MsgType,
+      </if>
+      <if test="title != null" >
+        Title,
+      </if>
+      <if test="content != null" >
+        Content,
+      </if>
+      <if test="messagetype != null" >
+        MessageType,
+      </if>
+      <if test="sendtype != null" >
+        sendtype,
+      </if>
+      <if test="relesedate != null" >
+        ReleseDate,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{tMessagemanagerid,jdbcType=CHAR},
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetype != null" >
+        #{messagetype,jdbcType=INTEGER},
+      </if>
+      <if test="sendtype != null" >
+        #{sendtype,jdbcType=VARCHAR},
+      </if>
+      <if test="relesedate != null" >
+        #{relesedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DShortMsgExample" resultType="java.lang.Integer" >
+    select count(*) from d_short_msg
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_short_msg
+    <set >
+      <if test="record.tMessagemanagerid != null" >
+        T_MessageManagerID = #{record.tMessagemanagerid,jdbcType=CHAR},
+      </if>
+      <if test="record.msgtype != null" >
+        MsgType = #{record.msgtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null" >
+        Title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null" >
+        Content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.messagetype != null" >
+        MessageType = #{record.messagetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendtype != null" >
+        sendtype = #{record.sendtype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.relesedate != null" >
+        ReleseDate = #{record.relesedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_short_msg
+    set T_MessageManagerID = #{record.tMessagemanagerid,jdbcType=CHAR},
+      MsgType = #{record.msgtype,jdbcType=INTEGER},
+      Title = #{record.title,jdbcType=VARCHAR},
+      Content = #{record.content,jdbcType=VARCHAR},
+      MessageType = #{record.messagetype,jdbcType=INTEGER},
+      sendtype = #{record.sendtype,jdbcType=VARCHAR},
+      ReleseDate = #{record.relesedate,jdbcType=TIMESTAMP},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DShortMsg" >
+    update d_short_msg
+    <set >
+      <if test="msgtype != null" >
+        MsgType = #{msgtype,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        Title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        Content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="messagetype != null" >
+        MessageType = #{messagetype,jdbcType=INTEGER},
+      </if>
+      <if test="sendtype != null" >
+        sendtype = #{sendtype,jdbcType=VARCHAR},
+      </if>
+      <if test="relesedate != null" >
+        ReleseDate = #{relesedate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where T_MessageManagerID = #{tMessagemanagerid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DShortMsg" >
+    update d_short_msg
+    set MsgType = #{msgtype,jdbcType=INTEGER},
+      Title = #{title,jdbcType=VARCHAR},
+      Content = #{content,jdbcType=VARCHAR},
+      MessageType = #{messagetype,jdbcType=INTEGER},
+      sendtype = #{sendtype,jdbcType=VARCHAR},
+      ReleseDate = #{relesedate,jdbcType=TIMESTAMP},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP}
+    where T_MessageManagerID = #{tMessagemanagerid,jdbcType=CHAR}
+  </update>
+</mapper>

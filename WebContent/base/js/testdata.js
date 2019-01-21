@@ -1,0 +1,1 @@
+[{"parents":"1001","text":"软件部","leaf":"true","nodeid":"1003"},{"parents":"1001","text":"软件部","leaf":"true","nodeid":"1003"},{"parents":"1001","text":"软件部","leaf":"true","nodeid":"1003"},{"parents":"1001","text":"软件部","leaf":"true","nodeid":"1003"},{"parents":"1001","text":"软件部","leaf":"true","nodeid":"1003"},{"parents":"1001","text":"工业部","leaf":"true","nodeid":"1005"}]

@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DQuoteDtlMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DQuoteDtl" >
+    <id column="quote_del_id" property="quoteDelId" jdbcType="VARCHAR" />
+    <result column="quote_id" property="quoteId" jdbcType="VARCHAR" />
+    <result column="kind_code" property="kindCode" jdbcType="VARCHAR" />
+    <result column="kind_name" property="kindName" jdbcType="VARCHAR" />
+    <result column="premium" property="premium" jdbcType="VARCHAR" />
+    <result column="tax_premium" property="taxPremium" jdbcType="VARCHAR" />
+    <result column="bench_mark_premium" property="benchMarkPremium" jdbcType="VARCHAR" />
+    <result column="dis_count" property="disCount" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    quote_del_id, quote_id, kind_code, kind_name, premium, tax_premium, bench_mark_premium, 
+    dis_count, amount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DQuoteDtlExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_quote_dtl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_quote_dtl
+    where quote_del_id = #{quoteDelId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_quote_dtl
+    where quote_del_id = #{quoteDelId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DQuoteDtlExample" >
+    delete from d_quote_dtl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DQuoteDtl" >
+    <selectKey resultType="java.lang.String" keyProperty="quoteDelId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_quote_dtl (quote_del_id, quote_id, kind_code, 
+      kind_name, premium, tax_premium, 
+      bench_mark_premium, dis_count, amount
+      )
+    values (#{quoteDelId,jdbcType=VARCHAR}, #{quoteId,jdbcType=VARCHAR}, #{kindCode,jdbcType=VARCHAR}, 
+      #{kindName,jdbcType=VARCHAR}, #{premium,jdbcType=VARCHAR}, #{taxPremium,jdbcType=VARCHAR}, 
+      #{benchMarkPremium,jdbcType=VARCHAR}, #{disCount,jdbcType=VARCHAR}, #{amount,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DQuoteDtl" >
+    <selectKey resultType="java.lang.String" keyProperty="quoteDelId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_quote_dtl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      quote_del_id,
+      <if test="quoteId != null" >
+        quote_id,
+      </if>
+      <if test="kindCode != null" >
+        kind_code,
+      </if>
+      <if test="kindName != null" >
+        kind_name,
+      </if>
+      <if test="premium != null" >
+        premium,
+      </if>
+      <if test="taxPremium != null" >
+        tax_premium,
+      </if>
+      <if test="benchMarkPremium != null" >
+        bench_mark_premium,
+      </if>
+      <if test="disCount != null" >
+        dis_count,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{quoteDelId,jdbcType=VARCHAR},
+      <if test="quoteId != null" >
+        #{quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="kindCode != null" >
+        #{kindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="kindName != null" >
+        #{kindName,jdbcType=VARCHAR},
+      </if>
+      <if test="premium != null" >
+        #{premium,jdbcType=VARCHAR},
+      </if>
+      <if test="taxPremium != null" >
+        #{taxPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="benchMarkPremium != null" >
+        #{benchMarkPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="disCount != null" >
+        #{disCount,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DQuoteDtlExample" resultType="java.lang.Integer" >
+    select count(*) from d_quote_dtl
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_quote_dtl
+    <set >
+      <if test="record.quoteDelId != null" >
+        quote_del_id = #{record.quoteDelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quoteId != null" >
+        quote_id = #{record.quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kindCode != null" >
+        kind_code = #{record.kindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kindName != null" >
+        kind_name = #{record.kindName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.premium != null" >
+        premium = #{record.premium,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taxPremium != null" >
+        tax_premium = #{record.taxPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="record.benchMarkPremium != null" >
+        bench_mark_premium = #{record.benchMarkPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disCount != null" >
+        dis_count = #{record.disCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null" >
+        amount = #{record.amount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_quote_dtl
+    set quote_del_id = #{record.quoteDelId,jdbcType=VARCHAR},
+      quote_id = #{record.quoteId,jdbcType=VARCHAR},
+      kind_code = #{record.kindCode,jdbcType=VARCHAR},
+      kind_name = #{record.kindName,jdbcType=VARCHAR},
+      premium = #{record.premium,jdbcType=VARCHAR},
+      tax_premium = #{record.taxPremium,jdbcType=VARCHAR},
+      bench_mark_premium = #{record.benchMarkPremium,jdbcType=VARCHAR},
+      dis_count = #{record.disCount,jdbcType=VARCHAR},
+      amount = #{record.amount,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DQuoteDtl" >
+    update d_quote_dtl
+    <set >
+      <if test="quoteId != null" >
+        quote_id = #{quoteId,jdbcType=VARCHAR},
+      </if>
+      <if test="kindCode != null" >
+        kind_code = #{kindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="kindName != null" >
+        kind_name = #{kindName,jdbcType=VARCHAR},
+      </if>
+      <if test="premium != null" >
+        premium = #{premium,jdbcType=VARCHAR},
+      </if>
+      <if test="taxPremium != null" >
+        tax_premium = #{taxPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="benchMarkPremium != null" >
+        bench_mark_premium = #{benchMarkPremium,jdbcType=VARCHAR},
+      </if>
+      <if test="disCount != null" >
+        dis_count = #{disCount,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where quote_del_id = #{quoteDelId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DQuoteDtl" >
+    update d_quote_dtl
+    set quote_id = #{quoteId,jdbcType=VARCHAR},
+      kind_code = #{kindCode,jdbcType=VARCHAR},
+      kind_name = #{kindName,jdbcType=VARCHAR},
+      premium = #{premium,jdbcType=VARCHAR},
+      tax_premium = #{taxPremium,jdbcType=VARCHAR},
+      bench_mark_premium = #{benchMarkPremium,jdbcType=VARCHAR},
+      dis_count = #{disCount,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=VARCHAR}
+    where quote_del_id = #{quoteDelId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DCarOwnerMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DCarOwner" >
+    <id column="car_owners_id" property="carOwnersId" jdbcType="CHAR" />
+    <result column="email_address" property="emailAddress" jdbcType="VARCHAR" />
+    <result column="identify_number" property="identifyNumber" jdbcType="VARCHAR" />
+    <result column="identify_type" property="identifyType" jdbcType="VARCHAR" />
+    <result column="insured_address" property="insuredAddress" jdbcType="VARCHAR" />
+    <result column="insured_code" property="insuredCode" jdbcType="VARCHAR" />
+    <result column="insured_flag" property="insuredFlag" jdbcType="VARCHAR" />
+    <result column="insured_flagName" property="insuredFlagname" jdbcType="VARCHAR" />
+    <result column="insured_name" property="insuredName" jdbcType="VARCHAR" />
+    <result column="insured_type" property="insuredType" jdbcType="VARCHAR" />
+    <result column="insured_type_name" property="insuredTypeName" jdbcType="VARCHAR" />
+    <result column="mobile_no" property="mobileNo" jdbcType="VARCHAR" />
+    <result column="phone_number" property="phoneNumber" jdbcType="VARCHAR" />
+    <result column="unit_type" property="unitType" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="updateUserId" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    car_owners_id, email_address, identify_number, identify_type, insured_address, insured_code, 
+    insured_flag, insured_flagName, insured_name, insured_type, insured_type_name, mobile_no, 
+    phone_number, unit_type, create_time, update_user_id, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DCarOwnerExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_car_owner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_car_owner
+    where car_owners_id = #{carOwnersId,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_car_owner
+    where car_owners_id = #{carOwnersId,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DCarOwnerExample" >
+    delete from d_car_owner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DCarOwner" >
+    <selectKey resultType="java.lang.String" keyProperty="carOwnersId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_car_owner (car_owners_id, email_address, identify_number, 
+      identify_type, insured_address, insured_code, 
+      insured_flag, insured_flagName, insured_name, 
+      insured_type, insured_type_name, mobile_no, 
+      phone_number, unit_type, create_time, 
+      update_user_id, update_time)
+    values (#{carOwnersId,jdbcType=CHAR}, #{emailAddress,jdbcType=VARCHAR}, #{identifyNumber,jdbcType=VARCHAR}, 
+      #{identifyType,jdbcType=VARCHAR}, #{insuredAddress,jdbcType=VARCHAR}, #{insuredCode,jdbcType=VARCHAR}, 
+      #{insuredFlag,jdbcType=VARCHAR}, #{insuredFlagname,jdbcType=VARCHAR}, #{insuredName,jdbcType=VARCHAR}, 
+      #{insuredType,jdbcType=VARCHAR}, #{insuredTypeName,jdbcType=VARCHAR}, #{mobileNo,jdbcType=VARCHAR}, 
+      #{phoneNumber,jdbcType=VARCHAR}, #{unitType,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DCarOwner" >
+    <selectKey resultType="java.lang.String" keyProperty="carOwnersId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_car_owner
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      car_owners_id,
+      <if test="emailAddress != null" >
+        email_address,
+      </if>
+      <if test="identifyNumber != null" >
+        identify_number,
+      </if>
+      <if test="identifyType != null" >
+        identify_type,
+      </if>
+      <if test="insuredAddress != null" >
+        insured_address,
+      </if>
+      <if test="insuredCode != null" >
+        insured_code,
+      </if>
+      <if test="insuredFlag != null" >
+        insured_flag,
+      </if>
+      <if test="insuredFlagname != null" >
+        insured_flagName,
+      </if>
+      <if test="insuredName != null" >
+        insured_name,
+      </if>
+      <if test="insuredType != null" >
+        insured_type,
+      </if>
+      <if test="insuredTypeName != null" >
+        insured_type_name,
+      </if>
+      <if test="mobileNo != null" >
+        mobile_no,
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number,
+      </if>
+      <if test="unitType != null" >
+        unit_type,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{carOwnersId,jdbcType=CHAR},
+      <if test="emailAddress != null" >
+        #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyNumber != null" >
+        #{identifyNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyType != null" >
+        #{identifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredAddress != null" >
+        #{insuredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredCode != null" >
+        #{insuredCode,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredFlag != null" >
+        #{insuredFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredFlagname != null" >
+        #{insuredFlagname,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredName != null" >
+        #{insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredType != null" >
+        #{insuredType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredTypeName != null" >
+        #{insuredTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DCarOwnerExample" resultType="java.lang.Integer" >
+    select count(*) from d_car_owner
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_car_owner
+    <set >
+      <if test="record.carOwnersId != null" >
+        car_owners_id = #{record.carOwnersId,jdbcType=CHAR},
+      </if>
+      <if test="record.emailAddress != null" >
+        email_address = #{record.emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identifyNumber != null" >
+        identify_number = #{record.identifyNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.identifyType != null" >
+        identify_type = #{record.identifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredAddress != null" >
+        insured_address = #{record.insuredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredCode != null" >
+        insured_code = #{record.insuredCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredFlag != null" >
+        insured_flag = #{record.insuredFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredFlagname != null" >
+        insured_flagName = #{record.insuredFlagname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredName != null" >
+        insured_name = #{record.insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredType != null" >
+        insured_type = #{record.insuredType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insuredTypeName != null" >
+        insured_type_name = #{record.insuredTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobileNo != null" >
+        mobile_no = #{record.mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null" >
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unitType != null" >
+        unit_type = #{record.unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_car_owner
+    set car_owners_id = #{record.carOwnersId,jdbcType=CHAR},
+      email_address = #{record.emailAddress,jdbcType=VARCHAR},
+      identify_number = #{record.identifyNumber,jdbcType=VARCHAR},
+      identify_type = #{record.identifyType,jdbcType=VARCHAR},
+      insured_address = #{record.insuredAddress,jdbcType=VARCHAR},
+      insured_code = #{record.insuredCode,jdbcType=VARCHAR},
+      insured_flag = #{record.insuredFlag,jdbcType=VARCHAR},
+      insured_flagName = #{record.insuredFlagname,jdbcType=VARCHAR},
+      insured_name = #{record.insuredName,jdbcType=VARCHAR},
+      insured_type = #{record.insuredType,jdbcType=VARCHAR},
+      insured_type_name = #{record.insuredTypeName,jdbcType=VARCHAR},
+      mobile_no = #{record.mobileNo,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      unit_type = #{record.unitType,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DCarOwner" >
+    update d_car_owner
+    <set >
+      <if test="emailAddress != null" >
+        email_address = #{emailAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyNumber != null" >
+        identify_number = #{identifyNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="identifyType != null" >
+        identify_type = #{identifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredAddress != null" >
+        insured_address = #{insuredAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredCode != null" >
+        insured_code = #{insuredCode,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredFlag != null" >
+        insured_flag = #{insuredFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredFlagname != null" >
+        insured_flagName = #{insuredFlagname,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredName != null" >
+        insured_name = #{insuredName,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredType != null" >
+        insured_type = #{insuredType,jdbcType=VARCHAR},
+      </if>
+      <if test="insuredTypeName != null" >
+        insured_type_name = #{insuredTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileNo != null" >
+        mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null" >
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="unitType != null" >
+        unit_type = #{unitType,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where car_owners_id = #{carOwnersId,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DCarOwner" >
+    update d_car_owner
+    set email_address = #{emailAddress,jdbcType=VARCHAR},
+      identify_number = #{identifyNumber,jdbcType=VARCHAR},
+      identify_type = #{identifyType,jdbcType=VARCHAR},
+      insured_address = #{insuredAddress,jdbcType=VARCHAR},
+      insured_code = #{insuredCode,jdbcType=VARCHAR},
+      insured_flag = #{insuredFlag,jdbcType=VARCHAR},
+      insured_flagName = #{insuredFlagname,jdbcType=VARCHAR},
+      insured_name = #{insuredName,jdbcType=VARCHAR},
+      insured_type = #{insuredType,jdbcType=VARCHAR},
+      insured_type_name = #{insuredTypeName,jdbcType=VARCHAR},
+      mobile_no = #{mobileNo,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      unit_type = #{unitType,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where car_owners_id = #{carOwnersId,jdbcType=CHAR}
+  </update>
+</mapper>

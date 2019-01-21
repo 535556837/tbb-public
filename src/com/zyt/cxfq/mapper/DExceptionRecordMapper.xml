@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DExceptionRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DExceptionRecord" >
+    <id column="exceptionrecordid" property="exceptionrecordid" jdbcType="CHAR" />
+    <result column="bmemberid" property="bmemberid" jdbcType="CHAR" />
+    <result column="requesturl" property="requesturl" jdbcType="VARCHAR" />
+    <result column="ipaddr" property="ipaddr" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="resource" property="resource" jdbcType="INTEGER" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.zyt.cxfq.model.DExceptionRecordWithBLOBs" extends="BaseResultMap" >
+    <result column="request" property="request" jdbcType="LONGVARCHAR" />
+    <result column="emsg" property="emsg" jdbcType="LONGVARCHAR" />
+    <result column="stackmsg" property="stackmsg" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    exceptionrecordid, bmemberid, requesturl, ipaddr, classname, createtime, resource
+  </sql>
+  <sql id="Blob_Column_List" >
+    request, emsg, stackmsg
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.zyt.cxfq.model.DExceptionRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from d_exception_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DExceptionRecordExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_exception_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from d_exception_record
+    where exceptionrecordid = #{exceptionrecordid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_exception_record
+    where exceptionrecordid = #{exceptionrecordid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DExceptionRecordExample" >
+    delete from d_exception_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DExceptionRecordWithBLOBs" >
+    <selectKey resultType="java.lang.String" keyProperty="exceptionrecordid" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_exception_record (exceptionrecordid, bmemberid, requesturl, 
+      ipaddr, classname, createtime, 
+      resource, request, emsg, 
+      stackmsg)
+    values (#{exceptionrecordid,jdbcType=CHAR}, #{bmemberid,jdbcType=CHAR}, #{requesturl,jdbcType=VARCHAR}, 
+      #{ipaddr,jdbcType=VARCHAR}, #{classname,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{resource,jdbcType=INTEGER}, #{request,jdbcType=LONGVARCHAR}, #{emsg,jdbcType=LONGVARCHAR}, 
+      #{stackmsg,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DExceptionRecordWithBLOBs" >
+    <selectKey resultType="java.lang.String" keyProperty="exceptionrecordid" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_exception_record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      exceptionrecordid,
+      <if test="bmemberid != null" >
+        bmemberid,
+      </if>
+      <if test="requesturl != null" >
+        requesturl,
+      </if>
+      <if test="ipaddr != null" >
+        ipaddr,
+      </if>
+      <if test="classname != null" >
+        classname,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="resource != null" >
+        resource,
+      </if>
+      <if test="request != null" >
+        request,
+      </if>
+      <if test="emsg != null" >
+        emsg,
+      </if>
+      <if test="stackmsg != null" >
+        stackmsg,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{exceptionrecordid,jdbcType=CHAR},
+      <if test="bmemberid != null" >
+        #{bmemberid,jdbcType=CHAR},
+      </if>
+      <if test="requesturl != null" >
+        #{requesturl,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddr != null" >
+        #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null" >
+        #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resource != null" >
+        #{resource,jdbcType=INTEGER},
+      </if>
+      <if test="request != null" >
+        #{request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="emsg != null" >
+        #{emsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stackmsg != null" >
+        #{stackmsg,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DExceptionRecordExample" resultType="java.lang.Integer" >
+    select count(*) from d_exception_record
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_exception_record
+    <set >
+      <if test="record.exceptionrecordid != null" >
+        exceptionrecordid = #{record.exceptionrecordid,jdbcType=CHAR},
+      </if>
+      <if test="record.bmemberid != null" >
+        bmemberid = #{record.bmemberid,jdbcType=CHAR},
+      </if>
+      <if test="record.requesturl != null" >
+        requesturl = #{record.requesturl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ipaddr != null" >
+        ipaddr = #{record.ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.classname != null" >
+        classname = #{record.classname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.resource != null" >
+        resource = #{record.resource,jdbcType=INTEGER},
+      </if>
+      <if test="record.request != null" >
+        request = #{record.request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.emsg != null" >
+        emsg = #{record.emsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.stackmsg != null" >
+        stackmsg = #{record.stackmsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update d_exception_record
+    set exceptionrecordid = #{record.exceptionrecordid,jdbcType=CHAR},
+      bmemberid = #{record.bmemberid,jdbcType=CHAR},
+      requesturl = #{record.requesturl,jdbcType=VARCHAR},
+      ipaddr = #{record.ipaddr,jdbcType=VARCHAR},
+      classname = #{record.classname,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      resource = #{record.resource,jdbcType=INTEGER},
+      request = #{record.request,jdbcType=LONGVARCHAR},
+      emsg = #{record.emsg,jdbcType=LONGVARCHAR},
+      stackmsg = #{record.stackmsg,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_exception_record
+    set exceptionrecordid = #{record.exceptionrecordid,jdbcType=CHAR},
+      bmemberid = #{record.bmemberid,jdbcType=CHAR},
+      requesturl = #{record.requesturl,jdbcType=VARCHAR},
+      ipaddr = #{record.ipaddr,jdbcType=VARCHAR},
+      classname = #{record.classname,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      resource = #{record.resource,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DExceptionRecordWithBLOBs" >
+    update d_exception_record
+    <set >
+      <if test="bmemberid != null" >
+        bmemberid = #{bmemberid,jdbcType=CHAR},
+      </if>
+      <if test="requesturl != null" >
+        requesturl = #{requesturl,jdbcType=VARCHAR},
+      </if>
+      <if test="ipaddr != null" >
+        ipaddr = #{ipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="classname != null" >
+        classname = #{classname,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="resource != null" >
+        resource = #{resource,jdbcType=INTEGER},
+      </if>
+      <if test="request != null" >
+        request = #{request,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="emsg != null" >
+        emsg = #{emsg,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="stackmsg != null" >
+        stackmsg = #{stackmsg,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where exceptionrecordid = #{exceptionrecordid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.zyt.cxfq.model.DExceptionRecordWithBLOBs" >
+    update d_exception_record
+    set bmemberid = #{bmemberid,jdbcType=CHAR},
+      requesturl = #{requesturl,jdbcType=VARCHAR},
+      ipaddr = #{ipaddr,jdbcType=VARCHAR},
+      classname = #{classname,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      resource = #{resource,jdbcType=INTEGER},
+      request = #{request,jdbcType=LONGVARCHAR},
+      emsg = #{emsg,jdbcType=LONGVARCHAR},
+      stackmsg = #{stackmsg,jdbcType=LONGVARCHAR}
+    where exceptionrecordid = #{exceptionrecordid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DExceptionRecord" >
+    update d_exception_record
+    set bmemberid = #{bmemberid,jdbcType=CHAR},
+      requesturl = #{requesturl,jdbcType=VARCHAR},
+      ipaddr = #{ipaddr,jdbcType=VARCHAR},
+      classname = #{classname,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      resource = #{resource,jdbcType=INTEGER}
+    where exceptionrecordid = #{exceptionrecordid,jdbcType=CHAR}
+  </update>
+</mapper>

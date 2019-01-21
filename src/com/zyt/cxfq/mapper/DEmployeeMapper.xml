@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DEmployeeMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DEmployee" >
+    <id column="u_id" property="uId" jdbcType="VARCHAR" />
+    <result column="u_name" property="uName" jdbcType="VARCHAR" />
+    <result column="u_phone" property="uPhone" jdbcType="VARCHAR" />
+    <result column="u_nick_name" property="uNickName" jdbcType="VARCHAR" />
+    <result column="u_pwd" property="uPwd" jdbcType="VARCHAR" />
+    <result column="u_pic" property="uPic" jdbcType="VARCHAR" />
+    <result column="u_company" property="uCompany" jdbcType="VARCHAR" />
+    <result column="u_remark" property="uRemark" jdbcType="VARCHAR" />
+    <result column="u_pro_code" property="uProCode" jdbcType="VARCHAR" />
+    <result column="u_from_pro" property="uFromPro" jdbcType="VARCHAR" />
+    <result column="create_user_id" property="createUserId" jdbcType="CHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="updateUserId" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    u_id, u_name, u_phone, u_nick_name, u_pwd, u_pic, u_company, u_remark, u_pro_code, 
+    u_from_pro, create_user_id, create_time, update_user_id, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DEmployeeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_employee
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_employee
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DEmployeeExample" >
+    delete from d_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DEmployee" >
+    <selectKey resultType="java.lang.String" keyProperty="uId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_employee (u_id, u_name, u_phone, 
+      u_nick_name, u_pwd, u_pic, 
+      u_company, u_remark, u_pro_code, 
+      u_from_pro, create_user_id, create_time, 
+      update_user_id, update_time)
+    values (#{uId,jdbcType=VARCHAR}, #{uName,jdbcType=VARCHAR}, #{uPhone,jdbcType=VARCHAR}, 
+      #{uNickName,jdbcType=VARCHAR}, #{uPwd,jdbcType=VARCHAR}, #{uPic,jdbcType=VARCHAR}, 
+      #{uCompany,jdbcType=VARCHAR}, #{uRemark,jdbcType=VARCHAR}, #{uProCode,jdbcType=VARCHAR}, 
+      #{uFromPro,jdbcType=VARCHAR}, #{createUserId,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DEmployee" >
+    <selectKey resultType="java.lang.String" keyProperty="uId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_employee
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      u_id,
+      <if test="uName != null" >
+        u_name,
+      </if>
+      <if test="uPhone != null" >
+        u_phone,
+      </if>
+      <if test="uNickName != null" >
+        u_nick_name,
+      </if>
+      <if test="uPwd != null" >
+        u_pwd,
+      </if>
+      <if test="uPic != null" >
+        u_pic,
+      </if>
+      <if test="uCompany != null" >
+        u_company,
+      </if>
+      <if test="uRemark != null" >
+        u_remark,
+      </if>
+      <if test="uProCode != null" >
+        u_pro_code,
+      </if>
+      <if test="uFromPro != null" >
+        u_from_pro,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{uId,jdbcType=VARCHAR},
+      <if test="uName != null" >
+        #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickName != null" >
+        #{uNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPwd != null" >
+        #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uPic != null" >
+        #{uPic,jdbcType=VARCHAR},
+      </if>
+      <if test="uCompany != null" >
+        #{uCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="uRemark != null" >
+        #{uRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="uProCode != null" >
+        #{uProCode,jdbcType=VARCHAR},
+      </if>
+      <if test="uFromPro != null" >
+        #{uFromPro,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DEmployeeExample" resultType="java.lang.Integer" >
+    select count(*) from d_employee
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_employee
+    <set >
+      <if test="record.uId != null" >
+        u_id = #{record.uId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uName != null" >
+        u_name = #{record.uName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPhone != null" >
+        u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uNickName != null" >
+        u_nick_name = #{record.uNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPwd != null" >
+        u_pwd = #{record.uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uPic != null" >
+        u_pic = #{record.uPic,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uCompany != null" >
+        u_company = #{record.uCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uRemark != null" >
+        u_remark = #{record.uRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uProCode != null" >
+        u_pro_code = #{record.uProCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uFromPro != null" >
+        u_from_pro = #{record.uFromPro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUserId != null" >
+        create_user_id = #{record.createUserId,jdbcType=CHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_employee
+    set u_id = #{record.uId,jdbcType=VARCHAR},
+      u_name = #{record.uName,jdbcType=VARCHAR},
+      u_phone = #{record.uPhone,jdbcType=VARCHAR},
+      u_nick_name = #{record.uNickName,jdbcType=VARCHAR},
+      u_pwd = #{record.uPwd,jdbcType=VARCHAR},
+      u_pic = #{record.uPic,jdbcType=VARCHAR},
+      u_company = #{record.uCompany,jdbcType=VARCHAR},
+      u_remark = #{record.uRemark,jdbcType=VARCHAR},
+      u_pro_code = #{record.uProCode,jdbcType=VARCHAR},
+      u_from_pro = #{record.uFromPro,jdbcType=VARCHAR},
+      create_user_id = #{record.createUserId,jdbcType=CHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DEmployee" >
+    update d_employee
+    <set >
+      <if test="uName != null" >
+        u_name = #{uName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPhone != null" >
+        u_phone = #{uPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="uNickName != null" >
+        u_nick_name = #{uNickName,jdbcType=VARCHAR},
+      </if>
+      <if test="uPwd != null" >
+        u_pwd = #{uPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="uPic != null" >
+        u_pic = #{uPic,jdbcType=VARCHAR},
+      </if>
+      <if test="uCompany != null" >
+        u_company = #{uCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="uRemark != null" >
+        u_remark = #{uRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="uProCode != null" >
+        u_pro_code = #{uProCode,jdbcType=VARCHAR},
+      </if>
+      <if test="uFromPro != null" >
+        u_from_pro = #{uFromPro,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DEmployee" >
+    update d_employee
+    set u_name = #{uName,jdbcType=VARCHAR},
+      u_phone = #{uPhone,jdbcType=VARCHAR},
+      u_nick_name = #{uNickName,jdbcType=VARCHAR},
+      u_pwd = #{uPwd,jdbcType=VARCHAR},
+      u_pic = #{uPic,jdbcType=VARCHAR},
+      u_company = #{uCompany,jdbcType=VARCHAR},
+      u_remark = #{uRemark,jdbcType=VARCHAR},
+      u_pro_code = #{uProCode,jdbcType=VARCHAR},
+      u_from_pro = #{uFromPro,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=CHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where u_id = #{uId,jdbcType=VARCHAR}
+  </update>
+</mapper>

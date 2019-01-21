@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系统登录</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="base/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="base/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="base/css/animate.css" rel="stylesheet">
+    <link href="base/css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="base/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <style type="text/css">
+    	body{
+        background: #e2f5f9; 
+        width:100%; 
+        background-size:cover;
+        background: url('./jsp/upload/login_bg_img.jpg') 0 0 no-repeat;
+      }
+      .company_name{
+        font-size: 57px;
+        text-align: center;
+        /*position: absolute;*/
+        width: 100%;
+        color: white;
+        height: 57px;
+        line-height: 57px;
+        padding-top: 0;
+        margin-bottom: 102px;
+      }
+		#logo{  float:left; position: relative;left: -5%;  /*height:90px; width:93px;*/ }
+		#logoword{float:right; height:46px; width:414px; margin-top:30px;}
+		.logoarea{margin:0 auto; width:341px; height:63px;padding-top: 27px;border-bottom: 1px solid #cdcdcd;}
+		.inputfont{font-size:16px; font-family:Consolas, "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", Monaco, "Courier New", monospace; font-weight:bold;}
+		/*子元素水平垂直居中 */
+    	.center{
+    		display: -webkit-flex;
+	        display: flex;
+	        -webkit-align-items: center;
+            align-items: center;
+       		-webkit-justify-content: center;
+           	justify-content: center;
+    	}
+
+	.progress{z-index: 2000}
+	.mask{position: fixed;top: 0;right: 0;bottom: 0;left: 0; z-index: 1000; background-color: #2F2F2F}
+
+  .col-sm-3{
+    display: inline-block;
+    width: 18px;
+    height: 100%;
+  }
+  .col-sm-9{
+    width: 323px;
+    padding-left: 17px;
+  }
+
+   .col-sm-9 input{
+      border: 0;
+      outline: 0;
+        background-color: white !important;
+        padding-left: 0;
+   }
+
+   input:-webkit-autofill{
+    background-color: white !important;
+   }
+    </style>
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="3;ie.html" />
+    <![endif]-->
+    <!-- Toastr script -->
+    <script type="text/javascript" src="base/js/jquery.min.js"></script>
+    <script type="text/javascript" src="base/js/bootstrap.min.js?v=3.3.6"></script>
+    <script type="text/javascript" src="base/js/plugins/toastr/toastr.min.js"></script>
+    <script>if(window.top !== window.self){ window.top.location = window.location;}</script>
+
+</head>
+<body class="center" >
+
+<div class="row" style="height: 560px; width:100%;position: absolute;top: 371px;top: 0;bottom: 0;margin:auto;">
+    <div class="company_name">YOYO车圈客户管理系统</div>
+        	<div id="" style="width:530px; margin:0 auto;">
+             	<div style="margin:auto; width:100%;">
+                <!-- 	<div id="logo"><img  src="base/img/system.png" style="width:100%;" alt=""/></div>
+                </div> -->
+                <!-- <div style=" clear:both;"></div> -->
+            	<div style="background:white; background-size:cover; margin: 0 auto; height:401px; width:500px;" >
+                <div style="height:1px;"></div>
+            	<form class="m-t" role="form" id="loginForm" >
+               <!--  <div class="logoarea"><img src="base/img/welcome.png" alt="" />
+                </div> -->
+                 <div class="logoarea" style="font-size: 32px;color: #a1a5b4;text-align: center;line-height: 23px;height: 23px;margin-top: 44px;margin-bottom: 17px;padding: 0;border:0;">WELCOME
+                </div>
+                <div class="logoarea">
+                	<!-- <span class="col-sm-3 inputfont">用户名:</span> -->
+                    <span class="col-sm-3 inputfont" style="background: url(jsp/upload/small_png.png) -18px -13px no-repeat;"></span>
+                    <span class="col-sm-9" style="background: white;">
+                    	<input type="text" id="userCode" class="form-control" name="userCode" placeholder="请输入用户名" required="" maxlength="11" style="background-color: rgb(255,255,255) !important;">
+                    </span>
+                  </div>
+                       <div style=" clear:both;"></div>
+                   <div class="logoarea">
+                       <!-- <span class="col-sm-3 inputfont"> 密&nbsp;&nbsp;码:</span> -->
+                       <span class="col-sm-3 inputfont" style="background: url(jsp/upload/small_png.png) -58px -13px no-repeat;"></span>
+                       <span class="col-sm-9">
+                       	<input type="password" id="password" class="form-control" name="password" placeholder="请输入密码" required="" style="background: white !important;">
+                       </span>
+                   </div>
+                    <div style=" clear:both;"></div>
+                    <div class="logoarea" hidden>
+	                	<span class="col-sm-3 inputfont">组织机构:</span>
+	                    <span class="col-sm-9">
+	                    	<select class="form-control" id="loginsystemid" name = "loginsystemid">
+			                </select>
+	                    </span>
+                  	</div>
+                    <div style=" clear:both;"></div>
+                 <div class="logoarea" style="position: relative;width: 240px;left: -51px;padding-right: 0;">
+                     <!-- <span class="col-sm-3 inputfont">验证码:</span> -->
+                         <span class="col-sm-3 inputfont" style="background: url(jsp/upload/small_png.png) -108px -13px no-repeat;"></span>
+                     <span class="col-sm-5" style="width: 220px;padding-left:17px; ">
+                        <input type="text" id="dxyzm" name="dxyzm" class="form-control"  placeholder="输入右侧验证码" required="" style="width: 100%;display: inline-block;border:0;outline: 0;padding-left: 0;">
+                     </span>
+                     <img id="checkimg" alt="" title="看不清楚，换一张"  style="position:absolute;bottom: -5px;right: -100px;cursor: pointer;vertical-align:middle;margin-left:15px; line-height:35px; height:35px;padding-bottom:7px;position: absolute;" onclick="refreshImg();"/>
+                  </div>
+                    <div style=" clear:both;"></div>
+                    </form>
+                    <div class="logoarea" style="margin-top: 40px;height: 44px;padding: 0;border:0;">
+                    	<button id="ykLogBut" type="button" class="btn btn-white" style="-webkit-border-radius: 5px; border-radius: 5px;background:#4360e6;height:40px; float:left;width: 140px;font-size: 20px;color: white;">登录</button>
+                    	<button id="reset" type="button" class="btn btn-white" style=" -webkit-border-radius: 5px;  border-radius: 5px; background:#dcab42;height:40px; width:140px; float:right;font-size: 20px;color: white;">重置</button>
+                    </div>
+
+           		</div>
+	 </div>
+</div>
+ 	<script src="base/js/plugins/layer/layer.min.js"></script>
+ 	<!--下拉框控件控件-->
+	<script src="base/js/sczxpub.js"></script>
+<script type="text/javascript">
+
+$(function(){
+
+
+	
+
+    $("#password").keydown(function(a){
+    	if(a.keyCode==13){
+    		userSub();
+    	}
+    });
+    $("#yzm").keydown(function(a){
+		if(a.keyCode==13){
+			userSub();
+		}
+	});
+    refreshImg();
+
+   	$("#ykLogBut").click(function(){
+   		userSub();
+   	});
+   	$(document).keydown(function(event){
+	   	if(event.keyCode == 13){ //绑定回车
+	   		userSub();//自动/触发登录按钮
+	   		}
+   		}); 
+   	
+   	$("#reset").click(function(){
+   		$("#userCode").val('');
+   		$("#password").val('');
+   	});
+
+
+});
+
+toastr.options = {
+	"closeButton": true,
+	"debug": false,
+	"progressBar": true,
+	"positionClass": "toast-top-right",
+	"onclick": null,
+	"showDuration": "400",
+	"hideDuration": "1000",
+	"timeOut": "7000",
+	"extendedTimeOut": "1000",
+	"showEasing": "swing",
+	"hideEasing": "linear",
+	"showMethod": "fadeIn",
+	"hideMethod": "fadeOut"
+};
+function userSub(){
+
+	var data = $("#loginForm").serialize()+"&loginType=";
+	
+	
+	var loading = layer.load();
+	$.ajax({
+		url: 'BMemberService/SYSlogin',//改为后台要用shiro的接口
+		type:"post",
+		dataType:"json",
+		data:data,
+
+		success:function(){
+			layer.close(loading);
+			window.location.href = 'SysMenuService2/main.html';
+		},
+        error:function (res) {
+        	toastr.error("提示",res.responseText);
+        	 window.setTimeout(layer.close(loading),2000);
+        	
+           /*  toastr.error("对不起","验证不通过！");
+            $("#userCode").val('');
+            $("#password").val('');
+            $("#yzm").val(''); */
+            refreshImg();
+        }
+	});
+}
+
+  /***********验证码*************/
+   function refreshImg(){
+    	$("#checkimg").attr("src",'commonAction/getImage.json?t='+Math.random());
+   }
+
+</script>
+
+</body>
+</html>

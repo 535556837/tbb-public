@@ -1,0 +1,866 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zyt.cxfq.mapper.DCarMapper" >
+  <resultMap id="BaseResultMap" type="com.zyt.cxfq.model.DCar" >
+    <id column="car_id" property="carId" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="car_owners_id" property="carOwnersId" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="license_no" property="licenseNo" jdbcType="VARCHAR" />
+    <result column="actual_value" property="actualValue" jdbcType="VARCHAR" />
+    <result column="brand_name" property="brandName" jdbcType="VARCHAR" />
+    <result column="car_insured_relation" property="carInsuredRelation" jdbcType="VARCHAR" />
+    <result column="car_kind_code" property="carKindCode" jdbcType="VARCHAR" />
+    <result column="car_kind_code_des" property="carKindCodeDes" jdbcType="VARCHAR" />
+    <result column="car_lot_equ_quality" property="carLotEquQuality" jdbcType="VARCHAR" />
+    <result column="clause_type" property="clauseType" jdbcType="VARCHAR" />
+    <result column="country_nature" property="countryNature" jdbcType="VARCHAR" />
+    <result column="energy_type1" property="energyType1" jdbcType="VARCHAR" />
+    <result column="enroll_date" property="enrollDate" jdbcType="VARCHAR" />
+    <result column="exhaust_scale" property="exhaustScale" jdbcType="VARCHAR" />
+    <result column="frame_no" property="frameNo" jdbcType="VARCHAR" />
+    <result column="hidden_engine_no" property="hiddenEngineNo" jdbcType="VARCHAR" />
+    <result column="is_energy_car" property="isEnergyCar" jdbcType="VARCHAR" />
+    <result column="license_color_code_des" property="licenseColorCodeDes" jdbcType="VARCHAR" />
+    <result column="license_flag" property="licenseFlag" jdbcType="VARCHAR" />
+    <result column="license_type_des" property="licenseTypeDes" jdbcType="VARCHAR" />
+    <result column="loan_vehicle_flag" property="loanVehicleFlag" jdbcType="VARCHAR" />
+    <result column="model_code" property="modelCode" jdbcType="VARCHAR" />
+    <result column="model_code_alias" property="modelCodeAlias" jdbcType="VARCHAR" />
+    <result column="monopoly_code" property="monopolyCode" jdbcType="VARCHAR" />
+    <result column="monopoly_flag" property="monopolyFlag" jdbcType="VARCHAR" />
+    <result column="monopoly_name" property="monopolyName" jdbcType="VARCHAR" />
+    <result column="new_car_flag" property="newCarFlag" jdbcType="VARCHAR" />
+    <result column="no_nlocal_flag" property="noNlocalFlag" jdbcType="VARCHAR" />
+    <result column="purchase_price" property="purchasePrice" jdbcType="VARCHAR" />
+    <result column="query_area_code" property="queryAreaCode" jdbcType="VARCHAR" />
+    <result column="query_area_name" property="queryAreaName" jdbcType="VARCHAR" />
+    <result column="query_arvehicle_pricerea_name" property="queryArvehiclePricereaName" jdbcType="VARCHAR" />
+    <result column="run_area_code" property="runAreaCode" jdbcType="VARCHAR" />
+    <result column="run_miles" property="runMiles" jdbcType="VARCHAR" />
+    <result column="seat_count" property="seatCount" jdbcType="VARCHAR" />
+    <result column="ton_count" property="tonCount" jdbcType="VARCHAR" />
+    <result column="transfer_date" property="transferDate" jdbcType="VARCHAR" />
+    <result column="transfer_vehicle_flag" property="transferVehicleFlag" jdbcType="VARCHAR" />
+    <result column="use_nature_code" property="useNatureCode" jdbcType="VARCHAR" />
+    <result column="use_years" property="useYears" jdbcType="VARCHAR" />
+    <result column="vin_no" property="vinNo" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_user_id" property="updateUserId" jdbcType="CHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    car_id, client_id, car_owners_id, source, license_no, actual_value, brand_name, car_insured_relation, 
+    car_kind_code, car_kind_code_des, car_lot_equ_quality, clause_type, country_nature, 
+    energy_type1, enroll_date, exhaust_scale, frame_no, hidden_engine_no, is_energy_car, 
+    license_color_code_des, license_flag, license_type_des, loan_vehicle_flag, model_code, 
+    model_code_alias, monopoly_code, monopoly_flag, monopoly_name, new_car_flag, no_nlocal_flag, 
+    purchase_price, query_area_code, query_area_name, query_arvehicle_pricerea_name, 
+    run_area_code, run_miles, seat_count, ton_count, transfer_date, transfer_vehicle_flag, 
+    use_nature_code, use_years, vin_no, create_time, update_user_id, update_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zyt.cxfq.model.DCarExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from d_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="page != null" >
+      limit #{page.offset} , #{page.limit}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from d_car
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from d_car
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zyt.cxfq.model.DCarExample" >
+    delete from d_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zyt.cxfq.model.DCar" >
+    <selectKey resultType="java.lang.String" keyProperty="carId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_car (car_id, client_id, car_owners_id, 
+      source, license_no, actual_value, 
+      brand_name, car_insured_relation, car_kind_code, 
+      car_kind_code_des, car_lot_equ_quality, clause_type, 
+      country_nature, energy_type1, enroll_date, 
+      exhaust_scale, frame_no, hidden_engine_no, 
+      is_energy_car, license_color_code_des, license_flag, 
+      license_type_des, loan_vehicle_flag, model_code, 
+      model_code_alias, monopoly_code, monopoly_flag, 
+      monopoly_name, new_car_flag, no_nlocal_flag, 
+      purchase_price, query_area_code, query_area_name, 
+      query_arvehicle_pricerea_name, run_area_code, 
+      run_miles, seat_count, ton_count, 
+      transfer_date, transfer_vehicle_flag, use_nature_code, 
+      use_years, vin_no, create_time, 
+      update_user_id, update_time)
+    values (#{carId,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR}, #{carOwnersId,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{licenseNo,jdbcType=VARCHAR}, #{actualValue,jdbcType=VARCHAR}, 
+      #{brandName,jdbcType=VARCHAR}, #{carInsuredRelation,jdbcType=VARCHAR}, #{carKindCode,jdbcType=VARCHAR}, 
+      #{carKindCodeDes,jdbcType=VARCHAR}, #{carLotEquQuality,jdbcType=VARCHAR}, #{clauseType,jdbcType=VARCHAR}, 
+      #{countryNature,jdbcType=VARCHAR}, #{energyType1,jdbcType=VARCHAR}, #{enrollDate,jdbcType=VARCHAR}, 
+      #{exhaustScale,jdbcType=VARCHAR}, #{frameNo,jdbcType=VARCHAR}, #{hiddenEngineNo,jdbcType=VARCHAR}, 
+      #{isEnergyCar,jdbcType=VARCHAR}, #{licenseColorCodeDes,jdbcType=VARCHAR}, #{licenseFlag,jdbcType=VARCHAR}, 
+      #{licenseTypeDes,jdbcType=VARCHAR}, #{loanVehicleFlag,jdbcType=VARCHAR}, #{modelCode,jdbcType=VARCHAR}, 
+      #{modelCodeAlias,jdbcType=VARCHAR}, #{monopolyCode,jdbcType=VARCHAR}, #{monopolyFlag,jdbcType=VARCHAR}, 
+      #{monopolyName,jdbcType=VARCHAR}, #{newCarFlag,jdbcType=VARCHAR}, #{noNlocalFlag,jdbcType=VARCHAR}, 
+      #{purchasePrice,jdbcType=VARCHAR}, #{queryAreaCode,jdbcType=VARCHAR}, #{queryAreaName,jdbcType=VARCHAR}, 
+      #{queryArvehiclePricereaName,jdbcType=VARCHAR}, #{runAreaCode,jdbcType=VARCHAR}, 
+      #{runMiles,jdbcType=VARCHAR}, #{seatCount,jdbcType=VARCHAR}, #{tonCount,jdbcType=VARCHAR}, 
+      #{transferDate,jdbcType=VARCHAR}, #{transferVehicleFlag,jdbcType=VARCHAR}, #{useNatureCode,jdbcType=VARCHAR}, 
+      #{useYears,jdbcType=VARCHAR}, #{vinNo,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateUserId,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zyt.cxfq.model.DCar" >
+    <selectKey resultType="java.lang.String" keyProperty="carId" order="BEFORE" >
+      select concat(DATE_FORMAT(now(), '%y%m%d'),REPLACE(UUID(),'-','')) from dual
+    </selectKey>
+    insert into d_car
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      car_id,
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="carOwnersId != null" >
+        car_owners_id,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="licenseNo != null" >
+        license_no,
+      </if>
+      <if test="actualValue != null" >
+        actual_value,
+      </if>
+      <if test="brandName != null" >
+        brand_name,
+      </if>
+      <if test="carInsuredRelation != null" >
+        car_insured_relation,
+      </if>
+      <if test="carKindCode != null" >
+        car_kind_code,
+      </if>
+      <if test="carKindCodeDes != null" >
+        car_kind_code_des,
+      </if>
+      <if test="carLotEquQuality != null" >
+        car_lot_equ_quality,
+      </if>
+      <if test="clauseType != null" >
+        clause_type,
+      </if>
+      <if test="countryNature != null" >
+        country_nature,
+      </if>
+      <if test="energyType1 != null" >
+        energy_type1,
+      </if>
+      <if test="enrollDate != null" >
+        enroll_date,
+      </if>
+      <if test="exhaustScale != null" >
+        exhaust_scale,
+      </if>
+      <if test="frameNo != null" >
+        frame_no,
+      </if>
+      <if test="hiddenEngineNo != null" >
+        hidden_engine_no,
+      </if>
+      <if test="isEnergyCar != null" >
+        is_energy_car,
+      </if>
+      <if test="licenseColorCodeDes != null" >
+        license_color_code_des,
+      </if>
+      <if test="licenseFlag != null" >
+        license_flag,
+      </if>
+      <if test="licenseTypeDes != null" >
+        license_type_des,
+      </if>
+      <if test="loanVehicleFlag != null" >
+        loan_vehicle_flag,
+      </if>
+      <if test="modelCode != null" >
+        model_code,
+      </if>
+      <if test="modelCodeAlias != null" >
+        model_code_alias,
+      </if>
+      <if test="monopolyCode != null" >
+        monopoly_code,
+      </if>
+      <if test="monopolyFlag != null" >
+        monopoly_flag,
+      </if>
+      <if test="monopolyName != null" >
+        monopoly_name,
+      </if>
+      <if test="newCarFlag != null" >
+        new_car_flag,
+      </if>
+      <if test="noNlocalFlag != null" >
+        no_nlocal_flag,
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price,
+      </if>
+      <if test="queryAreaCode != null" >
+        query_area_code,
+      </if>
+      <if test="queryAreaName != null" >
+        query_area_name,
+      </if>
+      <if test="queryArvehiclePricereaName != null" >
+        query_arvehicle_pricerea_name,
+      </if>
+      <if test="runAreaCode != null" >
+        run_area_code,
+      </if>
+      <if test="runMiles != null" >
+        run_miles,
+      </if>
+      <if test="seatCount != null" >
+        seat_count,
+      </if>
+      <if test="tonCount != null" >
+        ton_count,
+      </if>
+      <if test="transferDate != null" >
+        transfer_date,
+      </if>
+      <if test="transferVehicleFlag != null" >
+        transfer_vehicle_flag,
+      </if>
+      <if test="useNatureCode != null" >
+        use_nature_code,
+      </if>
+      <if test="useYears != null" >
+        use_years,
+      </if>
+      <if test="vinNo != null" >
+        vin_no,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{carId,jdbcType=VARCHAR},
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="carOwnersId != null" >
+        #{carOwnersId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="actualValue != null" >
+        #{actualValue,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="carInsuredRelation != null" >
+        #{carInsuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCode != null" >
+        #{carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCodeDes != null" >
+        #{carKindCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="carLotEquQuality != null" >
+        #{carLotEquQuality,jdbcType=VARCHAR},
+      </if>
+      <if test="clauseType != null" >
+        #{clauseType,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNature != null" >
+        #{countryNature,jdbcType=VARCHAR},
+      </if>
+      <if test="energyType1 != null" >
+        #{energyType1,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollDate != null" >
+        #{enrollDate,jdbcType=VARCHAR},
+      </if>
+      <if test="exhaustScale != null" >
+        #{exhaustScale,jdbcType=VARCHAR},
+      </if>
+      <if test="frameNo != null" >
+        #{frameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hiddenEngineNo != null" >
+        #{hiddenEngineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnergyCar != null" >
+        #{isEnergyCar,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseColorCodeDes != null" >
+        #{licenseColorCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseFlag != null" >
+        #{licenseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseTypeDes != null" >
+        #{licenseTypeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="loanVehicleFlag != null" >
+        #{loanVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null" >
+        #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCodeAlias != null" >
+        #{modelCodeAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyCode != null" >
+        #{monopolyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyFlag != null" >
+        #{monopolyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyName != null" >
+        #{monopolyName,jdbcType=VARCHAR},
+      </if>
+      <if test="newCarFlag != null" >
+        #{newCarFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="noNlocalFlag != null" >
+        #{noNlocalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        #{purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="queryAreaCode != null" >
+        #{queryAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="queryAreaName != null" >
+        #{queryAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="queryArvehiclePricereaName != null" >
+        #{queryArvehiclePricereaName,jdbcType=VARCHAR},
+      </if>
+      <if test="runAreaCode != null" >
+        #{runAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="runMiles != null" >
+        #{runMiles,jdbcType=VARCHAR},
+      </if>
+      <if test="seatCount != null" >
+        #{seatCount,jdbcType=VARCHAR},
+      </if>
+      <if test="tonCount != null" >
+        #{tonCount,jdbcType=VARCHAR},
+      </if>
+      <if test="transferDate != null" >
+        #{transferDate,jdbcType=VARCHAR},
+      </if>
+      <if test="transferVehicleFlag != null" >
+        #{transferVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="useNatureCode != null" >
+        #{useNatureCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useYears != null" >
+        #{useYears,jdbcType=VARCHAR},
+      </if>
+      <if test="vinNo != null" >
+        #{vinNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zyt.cxfq.model.DCarExample" resultType="java.lang.Integer" >
+    select count(*) from d_car
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update d_car
+    <set >
+      <if test="record.carId != null" >
+        car_id = #{record.carId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientId != null" >
+        client_id = #{record.clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carOwnersId != null" >
+        car_owners_id = #{record.carOwnersId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseNo != null" >
+        license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.actualValue != null" >
+        actual_value = #{record.actualValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandName != null" >
+        brand_name = #{record.brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carInsuredRelation != null" >
+        car_insured_relation = #{record.carInsuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carKindCode != null" >
+        car_kind_code = #{record.carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carKindCodeDes != null" >
+        car_kind_code_des = #{record.carKindCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.carLotEquQuality != null" >
+        car_lot_equ_quality = #{record.carLotEquQuality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clauseType != null" >
+        clause_type = #{record.clauseType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.countryNature != null" >
+        country_nature = #{record.countryNature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.energyType1 != null" >
+        energy_type1 = #{record.energyType1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enrollDate != null" >
+        enroll_date = #{record.enrollDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exhaustScale != null" >
+        exhaust_scale = #{record.exhaustScale,jdbcType=VARCHAR},
+      </if>
+      <if test="record.frameNo != null" >
+        frame_no = #{record.frameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hiddenEngineNo != null" >
+        hidden_engine_no = #{record.hiddenEngineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isEnergyCar != null" >
+        is_energy_car = #{record.isEnergyCar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseColorCodeDes != null" >
+        license_color_code_des = #{record.licenseColorCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseFlag != null" >
+        license_flag = #{record.licenseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseTypeDes != null" >
+        license_type_des = #{record.licenseTypeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loanVehicleFlag != null" >
+        loan_vehicle_flag = #{record.loanVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelCode != null" >
+        model_code = #{record.modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modelCodeAlias != null" >
+        model_code_alias = #{record.modelCodeAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monopolyCode != null" >
+        monopoly_code = #{record.monopolyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monopolyFlag != null" >
+        monopoly_flag = #{record.monopolyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.monopolyName != null" >
+        monopoly_name = #{record.monopolyName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.newCarFlag != null" >
+        new_car_flag = #{record.newCarFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noNlocalFlag != null" >
+        no_nlocal_flag = #{record.noNlocalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.purchasePrice != null" >
+        purchase_price = #{record.purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryAreaCode != null" >
+        query_area_code = #{record.queryAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryAreaName != null" >
+        query_area_name = #{record.queryAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryArvehiclePricereaName != null" >
+        query_arvehicle_pricerea_name = #{record.queryArvehiclePricereaName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.runAreaCode != null" >
+        run_area_code = #{record.runAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.runMiles != null" >
+        run_miles = #{record.runMiles,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatCount != null" >
+        seat_count = #{record.seatCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tonCount != null" >
+        ton_count = #{record.tonCount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferDate != null" >
+        transfer_date = #{record.transferDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferVehicleFlag != null" >
+        transfer_vehicle_flag = #{record.transferVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useNatureCode != null" >
+        use_nature_code = #{record.useNatureCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.useYears != null" >
+        use_years = #{record.useYears,jdbcType=VARCHAR},
+      </if>
+      <if test="record.vinNo != null" >
+        vin_no = #{record.vinNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateUserId != null" >
+        update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update d_car
+    set car_id = #{record.carId,jdbcType=VARCHAR},
+      client_id = #{record.clientId,jdbcType=VARCHAR},
+      car_owners_id = #{record.carOwnersId,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      actual_value = #{record.actualValue,jdbcType=VARCHAR},
+      brand_name = #{record.brandName,jdbcType=VARCHAR},
+      car_insured_relation = #{record.carInsuredRelation,jdbcType=VARCHAR},
+      car_kind_code = #{record.carKindCode,jdbcType=VARCHAR},
+      car_kind_code_des = #{record.carKindCodeDes,jdbcType=VARCHAR},
+      car_lot_equ_quality = #{record.carLotEquQuality,jdbcType=VARCHAR},
+      clause_type = #{record.clauseType,jdbcType=VARCHAR},
+      country_nature = #{record.countryNature,jdbcType=VARCHAR},
+      energy_type1 = #{record.energyType1,jdbcType=VARCHAR},
+      enroll_date = #{record.enrollDate,jdbcType=VARCHAR},
+      exhaust_scale = #{record.exhaustScale,jdbcType=VARCHAR},
+      frame_no = #{record.frameNo,jdbcType=VARCHAR},
+      hidden_engine_no = #{record.hiddenEngineNo,jdbcType=VARCHAR},
+      is_energy_car = #{record.isEnergyCar,jdbcType=VARCHAR},
+      license_color_code_des = #{record.licenseColorCodeDes,jdbcType=VARCHAR},
+      license_flag = #{record.licenseFlag,jdbcType=VARCHAR},
+      license_type_des = #{record.licenseTypeDes,jdbcType=VARCHAR},
+      loan_vehicle_flag = #{record.loanVehicleFlag,jdbcType=VARCHAR},
+      model_code = #{record.modelCode,jdbcType=VARCHAR},
+      model_code_alias = #{record.modelCodeAlias,jdbcType=VARCHAR},
+      monopoly_code = #{record.monopolyCode,jdbcType=VARCHAR},
+      monopoly_flag = #{record.monopolyFlag,jdbcType=VARCHAR},
+      monopoly_name = #{record.monopolyName,jdbcType=VARCHAR},
+      new_car_flag = #{record.newCarFlag,jdbcType=VARCHAR},
+      no_nlocal_flag = #{record.noNlocalFlag,jdbcType=VARCHAR},
+      purchase_price = #{record.purchasePrice,jdbcType=VARCHAR},
+      query_area_code = #{record.queryAreaCode,jdbcType=VARCHAR},
+      query_area_name = #{record.queryAreaName,jdbcType=VARCHAR},
+      query_arvehicle_pricerea_name = #{record.queryArvehiclePricereaName,jdbcType=VARCHAR},
+      run_area_code = #{record.runAreaCode,jdbcType=VARCHAR},
+      run_miles = #{record.runMiles,jdbcType=VARCHAR},
+      seat_count = #{record.seatCount,jdbcType=VARCHAR},
+      ton_count = #{record.tonCount,jdbcType=VARCHAR},
+      transfer_date = #{record.transferDate,jdbcType=VARCHAR},
+      transfer_vehicle_flag = #{record.transferVehicleFlag,jdbcType=VARCHAR},
+      use_nature_code = #{record.useNatureCode,jdbcType=VARCHAR},
+      use_years = #{record.useYears,jdbcType=VARCHAR},
+      vin_no = #{record.vinNo,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{record.updateUserId,jdbcType=CHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zyt.cxfq.model.DCar" >
+    update d_car
+    <set >
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="carOwnersId != null" >
+        car_owners_id = #{carOwnersId,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null" >
+        license_no = #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="actualValue != null" >
+        actual_value = #{actualValue,jdbcType=VARCHAR},
+      </if>
+      <if test="brandName != null" >
+        brand_name = #{brandName,jdbcType=VARCHAR},
+      </if>
+      <if test="carInsuredRelation != null" >
+        car_insured_relation = #{carInsuredRelation,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCode != null" >
+        car_kind_code = #{carKindCode,jdbcType=VARCHAR},
+      </if>
+      <if test="carKindCodeDes != null" >
+        car_kind_code_des = #{carKindCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="carLotEquQuality != null" >
+        car_lot_equ_quality = #{carLotEquQuality,jdbcType=VARCHAR},
+      </if>
+      <if test="clauseType != null" >
+        clause_type = #{clauseType,jdbcType=VARCHAR},
+      </if>
+      <if test="countryNature != null" >
+        country_nature = #{countryNature,jdbcType=VARCHAR},
+      </if>
+      <if test="energyType1 != null" >
+        energy_type1 = #{energyType1,jdbcType=VARCHAR},
+      </if>
+      <if test="enrollDate != null" >
+        enroll_date = #{enrollDate,jdbcType=VARCHAR},
+      </if>
+      <if test="exhaustScale != null" >
+        exhaust_scale = #{exhaustScale,jdbcType=VARCHAR},
+      </if>
+      <if test="frameNo != null" >
+        frame_no = #{frameNo,jdbcType=VARCHAR},
+      </if>
+      <if test="hiddenEngineNo != null" >
+        hidden_engine_no = #{hiddenEngineNo,jdbcType=VARCHAR},
+      </if>
+      <if test="isEnergyCar != null" >
+        is_energy_car = #{isEnergyCar,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseColorCodeDes != null" >
+        license_color_code_des = #{licenseColorCodeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseFlag != null" >
+        license_flag = #{licenseFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseTypeDes != null" >
+        license_type_des = #{licenseTypeDes,jdbcType=VARCHAR},
+      </if>
+      <if test="loanVehicleFlag != null" >
+        loan_vehicle_flag = #{loanVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCode != null" >
+        model_code = #{modelCode,jdbcType=VARCHAR},
+      </if>
+      <if test="modelCodeAlias != null" >
+        model_code_alias = #{modelCodeAlias,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyCode != null" >
+        monopoly_code = #{monopolyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyFlag != null" >
+        monopoly_flag = #{monopolyFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="monopolyName != null" >
+        monopoly_name = #{monopolyName,jdbcType=VARCHAR},
+      </if>
+      <if test="newCarFlag != null" >
+        new_car_flag = #{newCarFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="noNlocalFlag != null" >
+        no_nlocal_flag = #{noNlocalFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="purchasePrice != null" >
+        purchase_price = #{purchasePrice,jdbcType=VARCHAR},
+      </if>
+      <if test="queryAreaCode != null" >
+        query_area_code = #{queryAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="queryAreaName != null" >
+        query_area_name = #{queryAreaName,jdbcType=VARCHAR},
+      </if>
+      <if test="queryArvehiclePricereaName != null" >
+        query_arvehicle_pricerea_name = #{queryArvehiclePricereaName,jdbcType=VARCHAR},
+      </if>
+      <if test="runAreaCode != null" >
+        run_area_code = #{runAreaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="runMiles != null" >
+        run_miles = #{runMiles,jdbcType=VARCHAR},
+      </if>
+      <if test="seatCount != null" >
+        seat_count = #{seatCount,jdbcType=VARCHAR},
+      </if>
+      <if test="tonCount != null" >
+        ton_count = #{tonCount,jdbcType=VARCHAR},
+      </if>
+      <if test="transferDate != null" >
+        transfer_date = #{transferDate,jdbcType=VARCHAR},
+      </if>
+      <if test="transferVehicleFlag != null" >
+        transfer_vehicle_flag = #{transferVehicleFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="useNatureCode != null" >
+        use_nature_code = #{useNatureCode,jdbcType=VARCHAR},
+      </if>
+      <if test="useYears != null" >
+        use_years = #{useYears,jdbcType=VARCHAR},
+      </if>
+      <if test="vinNo != null" >
+        vin_no = #{vinNo,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        update_user_id = #{updateUserId,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zyt.cxfq.model.DCar" >
+    update d_car
+    set client_id = #{clientId,jdbcType=VARCHAR},
+      car_owners_id = #{carOwnersId,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      actual_value = #{actualValue,jdbcType=VARCHAR},
+      brand_name = #{brandName,jdbcType=VARCHAR},
+      car_insured_relation = #{carInsuredRelation,jdbcType=VARCHAR},
+      car_kind_code = #{carKindCode,jdbcType=VARCHAR},
+      car_kind_code_des = #{carKindCodeDes,jdbcType=VARCHAR},
+      car_lot_equ_quality = #{carLotEquQuality,jdbcType=VARCHAR},
+      clause_type = #{clauseType,jdbcType=VARCHAR},
+      country_nature = #{countryNature,jdbcType=VARCHAR},
+      energy_type1 = #{energyType1,jdbcType=VARCHAR},
+      enroll_date = #{enrollDate,jdbcType=VARCHAR},
+      exhaust_scale = #{exhaustScale,jdbcType=VARCHAR},
+      frame_no = #{frameNo,jdbcType=VARCHAR},
+      hidden_engine_no = #{hiddenEngineNo,jdbcType=VARCHAR},
+      is_energy_car = #{isEnergyCar,jdbcType=VARCHAR},
+      license_color_code_des = #{licenseColorCodeDes,jdbcType=VARCHAR},
+      license_flag = #{licenseFlag,jdbcType=VARCHAR},
+      license_type_des = #{licenseTypeDes,jdbcType=VARCHAR},
+      loan_vehicle_flag = #{loanVehicleFlag,jdbcType=VARCHAR},
+      model_code = #{modelCode,jdbcType=VARCHAR},
+      model_code_alias = #{modelCodeAlias,jdbcType=VARCHAR},
+      monopoly_code = #{monopolyCode,jdbcType=VARCHAR},
+      monopoly_flag = #{monopolyFlag,jdbcType=VARCHAR},
+      monopoly_name = #{monopolyName,jdbcType=VARCHAR},
+      new_car_flag = #{newCarFlag,jdbcType=VARCHAR},
+      no_nlocal_flag = #{noNlocalFlag,jdbcType=VARCHAR},
+      purchase_price = #{purchasePrice,jdbcType=VARCHAR},
+      query_area_code = #{queryAreaCode,jdbcType=VARCHAR},
+      query_area_name = #{queryAreaName,jdbcType=VARCHAR},
+      query_arvehicle_pricerea_name = #{queryArvehiclePricereaName,jdbcType=VARCHAR},
+      run_area_code = #{runAreaCode,jdbcType=VARCHAR},
+      run_miles = #{runMiles,jdbcType=VARCHAR},
+      seat_count = #{seatCount,jdbcType=VARCHAR},
+      ton_count = #{tonCount,jdbcType=VARCHAR},
+      transfer_date = #{transferDate,jdbcType=VARCHAR},
+      transfer_vehicle_flag = #{transferVehicleFlag,jdbcType=VARCHAR},
+      use_nature_code = #{useNatureCode,jdbcType=VARCHAR},
+      use_years = #{useYears,jdbcType=VARCHAR},
+      vin_no = #{vinNo,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_user_id = #{updateUserId,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where car_id = #{carId,jdbcType=VARCHAR}
+  </update>
+</mapper>

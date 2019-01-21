@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="1800 seconds"
+	debug="false">
+
+	<property name="USER_HOME" value="../logs" />
+	<property scope="context" name="FILE_NAME" value="mylog-logback" />
+
+	<timestamp key="byDay" datePattern="yyyy-MM-dd" />
+
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="file"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${USER_HOME}/${FILE_NAME}.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+			<fileNamePattern>${USER_HOME}/${byDay}/${FILE_NAME}-${byDay}-%i.log.zip
+			</fileNamePattern>
+			<minIndex>1</minIndex>
+			<maxIndex>10</maxIndex>
+		</rollingPolicy>
+
+		<triggeringPolicy
+			class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+			<maxFileSize>5MB</maxFileSize>
+		</triggeringPolicy>
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n
+			</pattern>
+		</encoder>
+
+	</appender>
+
+	<!-- 所有日志文件 -->
+	<appender name="AllLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/log/all/%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>30</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- 付款日志文件 -->
+	<appender name="PayLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/log/pay/%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	<!-- job日志文件 -->
+	<appender name="JobLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/log/job/%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- job日志文件 -->
+	<appender name="WebApiLog"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${USER_HOME}/log/WebApi/%d{yyyy-MM-dd}.log
+			</fileNamePattern>
+			<maxHistory>90</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{40} - %msg%n
+			</pattern>
+		</encoder>
+	</appender>
+
+	<!-- 为某个包下的所有类指定Appender 这里也可以指定类名称例如：com.aa.bb.ClassName -->
+	<logger name="com.yyb.service.pay.alipay" level="DEBUG" >
+		<appender-ref ref="PayLog" />
+	</logger>
+
+	<logger name="com.yyb.service.job" level="DEBUG" >
+		<appender-ref ref="JobLog" />
+	</logger>
+	
+	<logger name="com.yyb.webApi" level="DEBUG" >
+		<appender-ref ref="WebApiLog" />
+	</logger>
+	
+	<root level="info">
+		<level value="info" />
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="AllLog" />
+	</root>
+	<!-- 下面配置一些第三方包的日志过滤级别，用于避免刷屏 -->
+
+	<logger name="org.hibernate" level="WARN" />
+	<logger name="org.springframework" level="WARN" />
+	<logger name="com.opensymphony" level="WARN" />
+	<logger name="org.apache" level="WARN" />
+
+	<!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
+	<logger name="org.hibernate.type.descriptor.sql.BasicBinder"
+		level="TRACE" />
+	<logger name="org.hibernate.type.descriptor.sql.BasicExtractor"
+		level="DEBUG" />
+	<logger name="org.hibernate.SQL" level="DEBUG" />
+	<logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
+	<logger name="dao" level="DEBUG" />
+</configuration>

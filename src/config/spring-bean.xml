@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<context:component-scan base-package="com.zyt.cxfq.service" />
+	<context:component-scan base-package="com.zyt.cxfq.common" />
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 扫描me.gacl.dao这个包以及它的子包下的所有映射接口类 -->
+		<property name="basePackage" value="com.yfsd.sysmg.dao,com.yfsd.sysmg.mapper " />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- 自动加载码表数据到 内存 -->
+<!-- 	<bean id="initDataPostProcessor" class="com.common.InitDataPostProcessor"/> -->
+</beans>
